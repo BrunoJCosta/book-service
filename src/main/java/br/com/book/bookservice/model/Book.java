@@ -23,12 +23,16 @@ public class Book implements Serializable {
     @Id
     @Column(name = "id")
     private Long id;
+
     @Column(name = "title")
     private String title;
+
     @Column(name = "author")
     private String author;
+
     @Column(name = "date")
     private LocalDate date;
+
     @Column(name = "price")
     private Double price;
 

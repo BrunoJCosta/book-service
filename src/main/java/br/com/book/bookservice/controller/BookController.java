@@ -20,7 +20,7 @@ public class BookController {
 
     @GetMapping("/{id}/{currency}")
     public Book findById(@PathVariable(name = "id") String idStr, @PathVariable String currency) {
-        Long id = Objects.nonNull(idStr) ? Long.parseLong(idStr) : 0L;
+        long id = Objects.nonNull(idStr) ? Long.parseLong(idStr) : 0L;
         if (id < 0)
             throw new RuntimeException("Id do book está invalido");
         if (currency == null)
