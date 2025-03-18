@@ -1,0 +1,19 @@
+networks:
+  ms:
+    name: ms-network
+    driver: bridge
+    external: true
+
+services:
+  db:
+    container_name: db_book
+    image: postgres:14beta3
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: book_server
+    ports:
+      - "5002:5432"
+    networks:
+      - ms
