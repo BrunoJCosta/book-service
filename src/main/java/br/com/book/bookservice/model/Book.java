@@ -15,7 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "book", schema = "book_server")
+@Table(name = "book", schema = "book")
 public class Book implements Serializable {
 
     @Id

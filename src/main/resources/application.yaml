@@ -9,11 +9,10 @@ spring:
     url: jdbc:postgresql://localhost:5002/book_server
     username: postgres
     password: postgres
-    name: book_server
 
   flyway:
     url: jdbc:postgresql://localhost:5002/book_server
-    schemas: book_server
+    schemas: book
     user: postgres
     password: postgres
 
@@ -25,3 +24,4 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: true
+    open-in-view: false
