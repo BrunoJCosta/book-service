@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -34,16 +31,17 @@ public class BookController {
         if (currency == null)
             throw new RuntimeException("Currency está invalido");
 
-        String porta = environment.getProperty("local.server.port");
-
         Book book = bookService.findById(id);
-        book.setEnvironment(porta);
+
         book.setCurrency(currency);
 
-        Cambio cambio = cambioProxy.getCambio(book.getPrice(), "USD", currency);
+         Cambio cambio = cambioProxy.getCambio(book.getPrice(), "USD", currency);
 
         if (Objects.isNull(cambio))
             throw new RuntimeException("cambio not found");
+
+        String porta = environment.getProperty("local.server.port");
+        book.setEnvironment("book port: " + porta + " | cambio port:" + cambio.getEnvironment());
 
         book.setPrice(cambio.getConvertValue());
 

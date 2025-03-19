@@ -1,17 +1,17 @@
 server:
-  port: 8100
+  port: ${PORT}
 
 spring:
   application:
     name: book-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5002/book_server
+    url: jdbc:postgresql://${DATA_BASE}:5002/book_server
     username: postgres
     password: postgres
 
   flyway:
-    url: jdbc:postgresql://localhost:5002/book_server
+    url: jdbc:postgresql://${DATA_BASE}:5002/book_server
     schemas: book
     user: postgres
     password: postgres
