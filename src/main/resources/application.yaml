@@ -1,25 +1,32 @@
 server:
   port: ${PORT}
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${HOST_EUREKA}:8761/eureka
+
 spring:
   application:
     name: book-service
 
   datasource:
-    url: jdbc:postgresql://${DATA_BASE}:5002/book_server
+    url: jdbc:postgresql://${DATA_BASE}:${PORT_DB}/book_server
     username: postgres
     password: postgres
 
   flyway:
-    url: jdbc:postgresql://${DATA_BASE}:5002/book_server
+    url: jdbc:postgresql://${DATA_BASE}:${PORT_DB}/book_server
     schemas: book
     user: postgres
     password: postgres
+    enabled: true
 
   sql:
     init:
       mode: always
       encoding: utf-8
+
   jpa:
     hibernate:
       ddl-auto: none
