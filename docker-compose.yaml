@@ -17,3 +17,43 @@ services:
       - "5002:5432"
     networks:
       - ms
+
+  back_1:
+    build:
+      context: .
+    container_name: book_01
+    image: img_book_java
+    ports:
+      - "8100:8100"
+    expose:
+      - 8100
+    environment:
+      DATA_BASE: db_book
+      PORT_DB: 5432
+      PORT: 8100
+      HOST_EUREKA: eureka
+    networks:
+      - ms
+    depends_on:
+      db:
+        condition: service_started
+
+  back_2:
+    build:
+      context: .
+    container_name: book_02
+    image: img_cambio_java
+    ports:
+      - "8102:8100"
+    expose:
+      - 8102
+    environment:
+      DATA_BASE: db_book
+      PORT_DB: 5432
+      PORT: 8101
+      HOST_EUREKA: eureka
+    networks:
+      - ms
+    depends_on:
+      db:
+        condition: service_started
