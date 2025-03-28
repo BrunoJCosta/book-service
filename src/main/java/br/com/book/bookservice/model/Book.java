@@ -1,6 +1,7 @@
 package br.com.book.bookservice.model;
 
 
+import br.com.book.bookservice.dto.BookDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -35,9 +36,11 @@ public class Book implements Serializable {
     @Column(name = "price")
     private Double price;
 
-    @Transient
-    private String currency;
-
-    @Transient
-    private String environment;
+    public BookDTO dto() {
+        BookDTO dto = new BookDTO();
+        dto.setTitle(this.title);
+        dto.setAuthor(this.author);
+        dto.setDate(this.date);
+        return dto;
+    }
 }
