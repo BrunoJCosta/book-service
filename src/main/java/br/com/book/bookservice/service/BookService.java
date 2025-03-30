@@ -27,12 +27,14 @@ public class BookService {
         BookDTO dto = book.dto();
 
         String porta = environment.getProperty("local.server.port");
-        dto.setEnvironment(porta);
+
         dto.setCurrency(currency);
 
         Cambio cambio = cambioProxy.getCambio(book.getPrice(), "USD", currency);
         dto.setCurrency(currency);
         dto.setPrice(cambio.getConvertValue());
+
+        dto.setEnvironment("book: " +porta + " | cambio: " + cambio.getEnvironment());
 
         return dto;
     }
