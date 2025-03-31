@@ -1,6 +1,10 @@
 server:
   port: 9551
 
+eureka:
+  client:
+    enabled: false
+
 spring:
   application:
     name: book-service-test
@@ -21,6 +25,10 @@ spring:
       encoding: utf-8
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
     show-sql: true
     open-in-view: false
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
