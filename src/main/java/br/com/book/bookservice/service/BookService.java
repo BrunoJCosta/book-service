@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class BookService {
@@ -17,11 +19,11 @@ public class BookService {
     private final Environment environment;
     private final CambioProxy cambioProxy;
 
-    public BookDTO findByIdAndCurrency(Long id, String currency) {
-        if (id < 0)
-            throw new RuntimeException("Id do book está invalido");
-        if (currency == null)
-            throw new RuntimeException("Currency está invalido");
+    public BookDTO findByIdAndCurrency(Long id, String currency) throws BookNotFound, CurrencyNotFound {
+        if (Objects.isNull(id) || id < 0)
+            throw new BookNotFound();
+        if (currency == null || currency.isEmpty() || currency.equalsIgnoreCase("null"))
+            throw new CurrencyNotFound();
 
         Book book = repository.findById(id).orElseThrow(() -> new RuntimeException("Book not found"));
         BookDTO dto = book.dto();
@@ -34,7 +36,7 @@ public class BookService {
         dto.setCurrency(currency);
         dto.setPrice(cambio.getConvertValue());
 
-        dto.setEnvironment("book: " +porta + " | cambio: " + cambio.getEnvironment());
+        dto.setEnvironment("book: " + porta + " | cambio: " + cambio.getEnvironment());
 
         return dto;
     }

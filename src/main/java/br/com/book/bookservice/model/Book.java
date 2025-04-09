@@ -3,10 +3,7 @@ package br.com.book.bookservice.model;
 
 import br.com.book.bookservice.dto.BookDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -15,13 +12,15 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Entity
-@Table(name = "book", schema = "book")
+@Table(name = "book", schema = "book_server")
 public class Book implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
+    @Setter(AccessLevel.NONE)
     private Long id;
 
     @Column(name = "title")
