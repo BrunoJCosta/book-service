@@ -20,7 +20,8 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping("/{id}/{currency}")
-    public BookDTO findById(@PathVariable(name = "id") String idStr, @PathVariable String currency) throws BookNotFound, CurrencyNotFound {
+    public BookDTO findById(@PathVariable(name = "id") String idStr, @PathVariable String currency)
+            throws BookNotFound, CurrencyNotFound {
         long id = Objects.nonNull(idStr) ? Long.parseLong(idStr) : 0L;
         return bookService.findByIdAndCurrency(id, currency);
     }
