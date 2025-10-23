@@ -35,6 +35,9 @@ public class Book implements Serializable {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "active", columnDefinition = "boolean default true")
+    private boolean active;
+
     public BookDTO dto() {
         BookDTO dto = new BookDTO();
         dto.setTitle(this.title);
