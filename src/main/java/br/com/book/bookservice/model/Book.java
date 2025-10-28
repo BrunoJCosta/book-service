@@ -5,6 +5,7 @@ import br.com.book.bookservice.dto.BookDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 
@@ -17,6 +18,8 @@ import java.time.LocalDate;
 @Table(name = "book", schema = "book_server")
 public class Book implements Serializable {
 
+    @Serial
+    private static final long serialVersionUID = -4296691095833640418L;
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")

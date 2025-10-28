@@ -1,4 +1,4 @@
-package br.com.book.bookservice.configuration;
+package br.com.book.bookservice.configuration.redis;
 
 import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
 import org.springframework.cache.annotation.EnableCaching;
@@ -11,8 +11,7 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 @Configuration
 @EnableCaching
-public class RedisConfiguration {
-
+public class RedisConfigurationBook {
 
     @Bean
     public JedisConnectionFactory redisConnectionFactory() {
