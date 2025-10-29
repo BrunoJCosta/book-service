@@ -1,6 +1,6 @@
 package br.com.book.bookservice.proxy;
 
-import br.com.book.bookservice.configuration.CambioProxyConfiguration;
+import br.com.book.bookservice.configuration.proxy.CambioProxyConfiguration;
 import br.com.book.bookservice.response.Cambio;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

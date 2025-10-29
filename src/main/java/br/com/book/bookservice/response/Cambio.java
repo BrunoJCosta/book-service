@@ -5,17 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-public class Cambio {
+public record Cambio(Long id, String from,
+                     String to, Double convertFactor,
+                     Double convertValue, String environment) {
 
-    private Long id;
-    private String from;
-    private String to;
-    private Double convertFactor;
-    private Double convertValue;
-    private String environment;
 
 }

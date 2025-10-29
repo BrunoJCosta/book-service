@@ -1,4 +1,4 @@
-package br.com.book.bookservice.configuration;
+package br.com.book.bookservice.configuration.proxy;
 
 import feign.RequestInterceptor;
 import feign.auth.BasicAuthRequestInterceptor;
