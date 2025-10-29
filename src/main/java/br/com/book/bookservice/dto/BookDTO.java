@@ -13,6 +13,7 @@ public class BookDTO {
     private String author;
     private LocalDate date;
     private Double price;
+    private Integer quantity;
 
     private String currency;
     private String environment;
