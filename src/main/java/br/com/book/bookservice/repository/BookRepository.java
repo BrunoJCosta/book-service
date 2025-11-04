@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    @Cacheable(cacheNames = CacheName.BOOK_ID, key = "#id")
+    @Cacheable(value = CacheName.BOOK_ID, key = "#id")
     Optional<Book> findByIdAndActiveTrue(Long id);
 
 }
