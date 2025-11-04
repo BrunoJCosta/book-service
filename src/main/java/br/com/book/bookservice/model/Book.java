@@ -20,6 +20,7 @@ public class Book implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -4296691095833640418L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "id")
@@ -47,5 +48,9 @@ public class Book implements Serializable {
         dto.setAuthor(this.author);
         dto.setDate(this.date);
         return dto;
+    }
+    @PrePersist
+    public void prePersist() {
+        this.active = true;
     }
 }

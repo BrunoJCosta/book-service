@@ -1,8 +1,5 @@
 package br.com.book.bookservice.util;
 
-import br.com.book.bookservice.service.BookNotFound;
-import br.com.book.bookservice.service.CurrencyNotFound;
-
 import java.util.Objects;
 
 public class LongUtils {
