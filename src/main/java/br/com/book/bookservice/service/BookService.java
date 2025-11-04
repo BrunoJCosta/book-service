@@ -1,6 +1,8 @@
 package br.com.book.bookservice.service;
 
 import br.com.book.bookservice.dto.BookDTO;
+import br.com.book.bookservice.exceptions.BookNotFound;
+import br.com.book.bookservice.exceptions.CurrencyNotFound;
 import br.com.book.bookservice.model.Book;
 import br.com.book.bookservice.proxy.CambioProxy;
 import br.com.book.bookservice.proxy.EstoqueProxy;
@@ -40,7 +42,7 @@ public class BookService {
         dto.setCurrency(currency);
         dto.setPrice(cambio.convertValue());
 
-        dto.setEnvironment("book: " + porta + " | cambio: " + cambio.environment());
+        dto.setEnvironment("book: " + porta + " | cambio: " + cambio.environment() + " | " + estoque.porta());
 
         return dto;
     }

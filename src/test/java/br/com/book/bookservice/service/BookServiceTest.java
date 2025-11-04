@@ -1,7 +1,10 @@
 package br.com.book.bookservice.service;
 
 import br.com.book.bookservice.dto.BookDTO;
+import br.com.book.bookservice.exceptions.BookNotFound;
+import br.com.book.bookservice.exceptions.CurrencyNotFound;
 import br.com.book.bookservice.proxy.CambioProxy;
+import br.com.book.bookservice.proxy.EstoqueProxy;
 import br.com.book.bookservice.repository.BookRepository;
 import br.com.book.bookservice.response.Cambio;
 import org.junit.jupiter.api.AfterEach;
@@ -15,8 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 @SpringBootTest
 class BookServiceTest {
 
@@ -28,6 +29,8 @@ class BookServiceTest {
     private BookRepository repository;
     @Mock
     private CambioProxy cambioProxy;
+    @Mock
+    private EstoqueProxy estoqueProxy;
     @Autowired
     private Environment environment;
 
@@ -39,8 +42,7 @@ class BookServiceTest {
     @BeforeEach
     void before() {
         this.autoCloseable = MockitoAnnotations.openMocks(this);
-        autoCloseable = MockitoAnnotations.openMocks(this);
-        service = new BookService(repository, environment, cambioProxy);
+        this.service = new BookService(this.repository, this.environment, this.cambioProxy, this.estoqueProxy);
 
     }
 
@@ -51,12 +53,12 @@ class BookServiceTest {
 
     @Test
     public void testIdIsNull() {
-        Assertions.assertThrows(BookNotFound.class, () -> service.findByIdAndCurrency(null, BRL));
+        Assertions.assertThrows(BookNotFound.class, () -> this.service.findByIdAndCurrency(null, BRL));
     }
 
     @Test
     public void testCurrencyIsNull() {
-        Assertions.assertThrows(CurrencyNotFound.class, () -> service.findByIdAndCurrency(1L, null));
+        Assertions.assertThrows(CurrencyNotFound.class, () -> this.service.findByIdAndCurrency(1L, null));
     }
 
     @Test
@@ -65,9 +67,9 @@ class BookServiceTest {
 
         Double result = valueBRL * valueFirstBook;
 
-        Mockito.when(cambioProxy.getCambio(valueFirstBook, USD, BRL))
-                .thenReturn(new Cambio(1L, USD, BRL, valueFirstBook, result, "8000"));
-        BookDTO brl = service.findByIdAndCurrency(1L, BRL);
+        Mockito.when(this.cambioProxy.getCambio(this.valueFirstBook, USD, BRL))
+                .thenReturn(new Cambio(1L, USD, BRL, this.valueFirstBook, result, "8000"));
+        BookDTO brl = this.service.findByIdAndCurrency(1L, BRL);
 
         Assertions.assertEquals(result, brl.getPrice());
         Assertions.assertEquals(BRL, brl.getCurrency());

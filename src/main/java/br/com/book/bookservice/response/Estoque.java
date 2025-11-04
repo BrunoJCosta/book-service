@@ -1,4 +1,4 @@
 package br.com.book.bookservice.response;
 
-public record Estoque(Long referencia, Integer quantidade) {
+public record Estoque(Long referencia, Integer quantidade, String porta) {
 }
