@@ -3,10 +3,10 @@ package br.com.book.bookservice.service;
 import br.com.book.bookservice.dto.BookDTO;
 import br.com.book.bookservice.exceptions.BookNotFound;
 import br.com.book.bookservice.exceptions.CurrencyNotFound;
-import br.com.book.bookservice.proxy.CambioProxy;
-import br.com.book.bookservice.proxy.EstoqueProxy;
+import br.com.book.bookservice.proxy.ExchangeGateway;
+import br.com.book.bookservice.proxy.StockGateway;
 import br.com.book.bookservice.repository.BookRepository;
-import br.com.book.bookservice.response.Cambio;
+import br.com.book.bookservice.response.Exchange;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,9 +28,9 @@ class BookServiceTest {
     @Autowired
     private BookRepository repository;
     @Mock
-    private CambioProxy cambioProxy;
+    private ExchangeGateway exchangeGateway;
     @Mock
-    private EstoqueProxy estoqueProxy;
+    private StockGateway stockGateway;
     @Autowired
     private Environment environment;
 
@@ -42,7 +42,7 @@ class BookServiceTest {
     @BeforeEach
     void before() {
         this.autoCloseable = MockitoAnnotations.openMocks(this);
-        this.service = new BookService(this.repository, this.environment, this.cambioProxy, this.estoqueProxy);
+        this.service = new BookService(this.repository, this.environment, this.exchangeGateway, this.stockGateway);
 
     }
 
@@ -67,8 +67,8 @@ class BookServiceTest {
 
         Double result = valueBRL * valueFirstBook;
 
-        Mockito.when(this.cambioProxy.getCambio(this.valueFirstBook, USD, BRL))
-                .thenReturn(new Cambio(1L, USD, BRL, this.valueFirstBook, result, "8000"));
+        Mockito.when(this.exchangeGateway.getCambio(this.valueFirstBook, USD, BRL))
+                .thenReturn(new Exchange(1L, USD, BRL, this.valueFirstBook, result, "8000"));
         BookDTO brl = this.service.findByIdAndCurrency(1L, BRL);
 
         Assertions.assertEquals(result, brl.getPrice());

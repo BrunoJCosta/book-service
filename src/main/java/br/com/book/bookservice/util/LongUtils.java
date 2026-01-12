@@ -12,4 +12,14 @@ public class LongUtils {
         return empty(lg) || lg < 0;
     }
 
+    public static Long strToLong(String str) {
+        if (Objects.isNull(str)) {
+            return null;
+        }
+        try {
+            return Long.parseLong(str);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
