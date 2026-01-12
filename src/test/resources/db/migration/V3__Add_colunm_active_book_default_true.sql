@@ -1,0 +1,1 @@
+alter table book_server.book_server.book add column active bool default true
