@@ -2,24 +2,24 @@ package br.com.book.bookservice.configuration.http;
 
 import br.com.book.bookservice.proxy.SecurityGateway;
 import feign.RequestInterceptor;
-import feign.auth.BasicAuthRequestInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseEntity;
 
 @Configuration
 @RequiredArgsConstructor
 public class InternalInterceptorConfiguration {
 
-    public static final String PASSWORD = "bruno_cambio_123";
-    public static final String USER = "bruno_cambio";
     private final SecurityGateway securityGateway;
 
     @Bean
     public RequestInterceptor requestInterceptor() {
-        String token = securityGateway.getToken(USER, PASSWORD, "BOOK");
-
-//        return new BasicAuthRequestInterceptor(USER, PASSWORD);
-        return null;
+        ResponseEntity<String> token = securityGateway.getToken("book");
+        return template -> {
+            String assinatura = token.getHeaders().getFirst("X-Signature");
+            template.header("X-Signature", assinatura);
+            template.header("Authorization-security", token.getBody());
+        };
     }
 }
