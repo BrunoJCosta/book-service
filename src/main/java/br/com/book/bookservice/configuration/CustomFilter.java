@@ -1,5 +1,6 @@
 package br.com.book.bookservice.configuration;
 
+import br.com.book.bookservice.configuration.rsa.Key;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -50,6 +51,8 @@ public class CustomFilter extends OncePerRequestFilter {
 
         if (StringUtils.isNotBlank(token)) {
             Jwt decoded = jwtDecoder.decode(token);
+            if (decoded.getAudience().contains(Key.BOOK.getKey()))
+                throw new RuntimeException("Invalid Credentials!");
             List<GrantedAuthority> permissionProject = decoded.getClaimAsStringList("scope")
                     .stream()
                     .<GrantedAuthority>map(SimpleGrantedAuthority::new)

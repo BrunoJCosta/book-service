@@ -41,3 +41,8 @@ spring:
       ddl-auto: none
     show-sql: true
     open-in-view: false
+
+security:
+  jwt:
+    public-key: classpath:keys/public.pem
+    secret: ${SECRET}

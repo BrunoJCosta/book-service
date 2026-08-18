@@ -24,7 +24,7 @@ public class SecurityConfiguration {
 //                .httpBasic(basic -> basic.authenticationEntryPoint(entryPoint))
                 .addFilterBefore(customFilter, BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(auth ->
-                        auth.anyRequest().authenticated()
+                        auth.anyRequest().permitAll()
                 ).build();
     }
 }

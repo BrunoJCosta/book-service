@@ -1,5 +1,6 @@
 package br.com.book.bookservice.configuration.http;
 
+import br.com.book.bookservice.configuration.rsa.Key;
 import br.com.book.bookservice.proxy.SecurityGateway;
 import feign.RequestInterceptor;
 import lombok.RequiredArgsConstructor;
@@ -15,8 +16,13 @@ public class InternalInterceptorConfiguration {
 
     @Bean
     public RequestInterceptor requestInterceptor() {
-        ResponseEntity<String> token = securityGateway.getToken("book");
+
         return template -> {
+            String caminhoProjeto = template.feignTarget().name();
+            Key target = Key.getCaminhoProjeto(caminhoProjeto);
+            String key = Key.BOOK.getKey();
+            ResponseEntity<String> token = securityGateway.getToken(key, target.getKey());
+
             String assinatura = token.getHeaders().getFirst("X-Signature");
             template.header("X-Signature", assinatura);
             template.header("Authorization-security", token.getBody());

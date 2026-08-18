@@ -1,5 +1,6 @@
 package br.com.book.bookservice.controller;
 
+import br.com.book.bookservice.configuration.PreAuthService;
 import br.com.book.bookservice.configuration.exception.Response;
 import br.com.book.bookservice.dto.BookDTO;
 import br.com.book.bookservice.exceptions.BookNotFound;
@@ -20,6 +21,8 @@ public class BookController {
     private final BookService bookService;
 
     @GetMapping("/{id}/{currency}")
+//    @PreAuthorize("hasAuthority('user.book.read')")
+//    @PreAuthService(permission = "service.book.read")
     public Response findById(@PathVariable(name = "id") String idStr,
                              @PathVariable String currency)
             throws BookNotFound, CurrencyNotFound {
@@ -29,12 +32,11 @@ public class BookController {
     }
 
     @GetMapping("/{currency}")
+    @PreAuthService(permission = "service.book.read")
     public Response listagem(@PathVariable String currency,
                              @RequestParam(name = "id") String idStr,
                              @RequestParam(name = "name") String name,
-                             @RequestParam(name = "author") String author
-    ) throws BookNotFound, CurrencyNotFound {
-
+                             @RequestParam(name = "author") String author) {
         Long id = LongUtils.strToLong(idStr);
         List<BookDTO> book = bookService.findAll(currency, id, name, author);
         return Response.ok(book);

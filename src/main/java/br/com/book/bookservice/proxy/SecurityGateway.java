@@ -1,9 +1,14 @@
 package br.com.book.bookservice.proxy;
 
-import org.springframework.stereotype.Component;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@Component
+@FeignClient(name = "security")
 public interface SecurityGateway {
 
-    String getToken(String user, String password, String book);
+    @GetMapping("/token")
+    ResponseEntity<String> getToken(@RequestParam String key, @RequestParam String target);
+
 }
