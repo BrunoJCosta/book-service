@@ -22,7 +22,7 @@ public class BookController {
 
     @GetMapping("/{id}/{currency}")
 //    @PreAuthorize("hasAuthority('user.book.read')")
-//    @PreAuthService(permission = "service.book.read")
+    @PreAuthService(permission = "service.book.read")
     public Response findById(@PathVariable(name = "id") String idStr,
                              @PathVariable String currency)
             throws BookNotFound, CurrencyNotFound {
