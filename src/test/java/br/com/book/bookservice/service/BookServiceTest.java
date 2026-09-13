@@ -7,6 +7,7 @@ import br.com.book.bookservice.proxy.ExchangeGateway;
 import br.com.book.bookservice.proxy.StockGateway;
 import br.com.book.bookservice.repository.BookRepository;
 import br.com.book.bookservice.response.Exchange;
+import br.com.book.bookservice.response.Stock;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +18,10 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class BookServiceTest {
 
     static final String USD = "USD";
@@ -69,10 +72,16 @@ class BookServiceTest {
 
         Mockito.when(this.exchangeGateway.getCambio(this.valueFirstBook, USD, BRL))
                 .thenReturn(new Exchange(1L, USD, BRL, this.valueFirstBook, result, "8000"));
+
+        int quantity = 10;
+        Mockito.when(this.stockGateway.getReferenciaBook(1L))
+                .thenReturn(new Stock(1L, quantity, "8001"));
+
         BookDTO brl = this.service.findByIdAndCurrency(1L, BRL);
 
         Assertions.assertEquals(result, brl.getPrice());
         Assertions.assertEquals(BRL, brl.getCurrency());
+        Assertions.assertEquals(quantity, brl.getQuantity());
     }
 
 }

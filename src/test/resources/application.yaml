@@ -32,3 +32,13 @@ spring:
       hibernate:
         hbm2ddl:
           auto: update
+
+  data:
+    redis:
+      host: localhost_teste
+      port: 6380
+
+security:
+  jwt:
+    public-key: classpath:keys/public.pem
+    secret: 'dsajmfsiotgewiojawiosddashfgh'

@@ -1,1 +1,1 @@
-alter table book_server.book_server.book add column active bool default true
+alter table book_server.book add column if not exists active bool default true
