@@ -5,19 +5,6 @@ networks:
     external: true
 
 services:
-  db:
-    container_name: db_book
-    image: postgres:14.0-alpine
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: book_server
-    ports:
-      - "5002:5432"
-    networks:
-      - ms
-
   back_1:
     build:
       context: .
@@ -28,8 +15,8 @@ services:
     expose:
       - 8100
     environment:
-      DATA_BASE: db_book
-      PORT_DB: 5432
+      BOOK_USER_DB: ${BOOK_USER_DB}
+      BOOK_PASSWORD_DB: ${BOOK_PASSWORD_DB}
       PORT: 8100
       HOST_EUREKA: eureka
       REDIS: redis
@@ -37,9 +24,6 @@ services:
       SECRET: book-ms-pescador-relatividade
     networks:
       - ms
-    depends_on:
-      db:
-        condition: service_started
 
   back_2:
     build:
@@ -51,7 +35,8 @@ services:
     expose:
       - 8101
     environment:
-      DATA_BASE: db_book
+      BOOK_USER_DB: ${BOOK_USER_DB}
+      BOOK_PASSWORD_DB: ${BOOK_PASSWORD_DB}
       PORT_DB: 5432
       PORT: 8101
       HOST_EUREKA: eureka
@@ -60,6 +45,3 @@ services:
       SECRET: book-ms-pescador-relatividade
     networks:
       - ms
-    depends_on:
-      db:
-        condition: service_started

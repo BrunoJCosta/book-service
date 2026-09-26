@@ -20,16 +20,16 @@ spring:
     name: book-service
 
   datasource:
-    url: jdbc:postgresql://${DATA_BASE}:${PORT_DB}/book_server
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://ep-floral-pond-b4t0xtf4-pooler.c-6.us-east-2.aws.neon.tech/book?npg_g4rOPSiB6wyJ&sslmode=require&channelBinding=require
+    password: ${PASSWORD_DB}
+    username: ${USER_DB}
 
   flyway:
-    url: jdbc:postgresql://${DATA_BASE}:${PORT_DB}/book_server
+    url: jdbc:postgresql://ep-floral-pond-b4t0xtf4-pooler.c-6.us-east-2.aws.neon.tech/book?user=neondb_owner&password=npg_g4rOPSiB6wyJ&sslmode=require&channelBinding=require
     schemas: book_server
-    user: postgres
-    password: postgres
     enabled: true
+    user: ${USER_DB}
+    password: ${PASSWORD_DB}
 
   sql:
     init:
