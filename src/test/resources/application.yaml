@@ -40,5 +40,5 @@ spring:
 
 security:
   jwt:
-    public-key: classpath:keys/public.pem
+    public-key: classpath:${FOLDER_KEY}/public.pem
     secret: 'dsajmfsiotgewiojawiosddashfgh'
