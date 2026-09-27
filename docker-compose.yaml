@@ -15,13 +15,12 @@ services:
     expose:
       - 8100
     environment:
+      PORT: 8100
       HOST_DB: ${HOST_DB}
       USER_DB: ${USER_DB}
       PASSWORD_DB: ${PASSWORD_DB}
-      PORT: 8100
+      HOST_REDIS: ${HOST_REDIS}
       HOST_EUREKA: eureka
-      REDIS: redis
-      REDIS_PORT: 6379
       SECRET: ${SECRET}
     networks:
       - ms
@@ -41,8 +40,7 @@ services:
       PASSWORD_DB: ${PASSWORD_DB}
       PORT: 8101
       HOST_EUREKA: eureka
-      REDIS: redis
-      REDIS_PORT: 6379
+      HOST_REDIS: ${HOST_REDIS}
       SECRET: ${SECRET}
     networks:
       - ms

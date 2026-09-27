@@ -16,17 +16,13 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 @Profile("!test")
 public class RedisConfigurationBook {
 
-    @Value("${REDIS}")
+    @Value("${HOST_REDIS}")
     private String hostName;
-
-    @Value("${REDIS_PORT}")
-    private Integer port;
 
     @Bean
     public JedisConnectionFactory redisConnectionFactory() {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
         config.setHostName(hostName);
-        config.setPort(port);
         config.setPassword("bruno_application");
         config.setDatabase(1);
 
